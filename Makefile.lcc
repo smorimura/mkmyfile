@@ -1,0 +1,31 @@
+# コメント行
+# target: mkmyfile.exe
+# ↑これは今のCPadだけに有効な行です。（この行をみて実行ファイルを決定します）
+# makeの動作には関係ありません。
+CC = lcc
+CFLAGS = -I$(INCDIR) -L$(LIBDIR) -DShift_JIS -DCRLF -v
+RM = del
+INSTALL = copy /-Y
+
+BINDIR = $(HOME)¥bin
+INCDIR = $(HOME)¥include
+LIBDIR = $(HOME)¥lib
+
+PROGRAM = mkmyfile.exe
+OBJS = mkmyfile.obj
+LIB_NAME = libshun
+
+.c.obj:
+	$(CC) $(CFLAGS) -c $<
+
+all : $(PROGRAM)
+
+$(PROGRAM) : $(OBJS)
+	$(CC) $(CFLAGS) -o $@ $(OBJS) -l$(LIB_NAME)
+
+install :
+	$(INSTALL) $(PROGRAM) $(BINDIR)
+
+clean :
+	$(RM) $(PROGRAM) *.obj *~ *.bak
+
